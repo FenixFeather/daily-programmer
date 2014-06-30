@@ -8,19 +8,9 @@ end
 IndexedString(s::String) = IndexedString(parse_string_to_array(s))
 
 function parse_string_to_array(s::String)
-    current = 1
-    words = String[]
-    while current <= length(s)
-        regex = r"[A-Za-z0-9]+"
-        word = match(regex, s, current)
-        if word == nothing
-            break
-        else
-            push!(words, word.match)
-            current = word.offset + length(word.match)
-        end
-    end
-    return words
+    regex = r"[A-Za-z0-9]+"
+    words = matchall(regex, s)
+    return String[string(word) for word in words]
 end
 
 
